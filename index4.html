@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>To Do List</title>
+<style>
+body{
+font-family:Arial,sans-serif;
+background-color:lightblue;
+text-align:center;
+}
+.container{
+width:300px;
+margin:auto;
+background-color:white;
+padding:20px;
+}
+input{
+width:65%;
+padding:8px;
+}
+button{
+padding:8px;
+background-color:skyblue;
+border:none;
+cursor:pointer;
+}
+ul{
+list-style:none;
+padding:0;
+}
+li{
+background-color:lightgray;
+margin-top:10px;
+padding:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+.completed{
+text-decoration:line-through;
+color:gray;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>To Do List</h2>
+<input type="text" id="task" placeholder="Enter task">
+<button onclick="addTask()">Add</button>
+<br><br>
+<button onclick="showTasks('all')">All</button>
+<button onclick="showTasks('active')">Active</button>
+<button onclick="showTasks('completed')">Completed</button>
+<ul id="list"></ul>
+</div>
+<script>
+let tasks=JSON.parse(localStorage.getItem("tasks"))||[];
+let filter="all";
+displayTasks();
+function addTask(){
+let input=document.getElementById("task");
+if(input.value==""){
+return;
+}
+tasks.push({
+text:input.value,
+completed:false
+});
+input.value="";
+saveTasks();
+displayTasks();
+}
+function displayTasks(){
+let list=document.getElementById("list");
+list.innerHTML="";
+for(let i=0;i<tasks.length;i++){
+if(filter=="active"&&tasks[i].completed){
+continue;
+}
+if(filter=="completed"&&!tasks[i].completed){
+continue;
+}
+let li=document.createElement("li");
+if(tasks[i].completed){
+li.classList.add("completed");
+}
+let span=document.createElement("span");
+span.innerText=tasks[i].text;
+span.onclick=function(){
+tasks[i].completed=!tasks[i].completed;
+saveTasks();
+displayTasks();
+};
+let edit=document.createElement("button");
+edit.innerText="Edit";
+edit.onclick=function(){
+let value=prompt("Edit task",tasks[i].text);
+if(value){
+tasks[i].text=value;
+saveTasks();
+displayTasks();
+}
+};
+let del=document.createElement("button");
+del.innerText="Delete";
+del.onclick=function(){
+tasks.splice(i,1);
+saveTasks();
+displayTasks();
+};
+li.appendChild(span);
+li.appendChild(edit);
+li.appendChild(del);
+list.appendChild(li);
+}
+}
+function saveTasks(){
+localStorage.setItem("tasks",JSON.stringify(tasks));
+}
+function showTasks(type){
+filter=type;
+displayTasks();
+}
+</script>
+</body>
+</html>
+
