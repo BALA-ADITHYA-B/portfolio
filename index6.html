@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>E-Commerce Product Catalog</title>
+<style>
+body{
+font-family:Arial;
+margin:0;
+text-align:center;
+}
+
+nav{
+background-color:lightgray;
+padding:15px;
+}
+
+button{
+padding:8px;
+margin:5px;
+}
+
+.page{
+display:none;
+padding:20px;
+}
+
+.card{
+border:1px solid black;
+width:200px;
+margin:20px auto;
+padding:10px;
+}
+
+img{
+width:150px;
+height:150px;
+}
+</style>
+</head>
+<body>
+
+<nav>
+
+<button onclick="showPage('home')">Home</button>
+
+<button onclick="showPage('products')">Products</button>
+
+<button onclick="showPage('about')">About</button>
+
+</nav>
+
+<div id="home" class="page">
+
+<h1>Welcome to Our Store</h1>
+
+<p>This is a simple E-Commerce Product Catalog.</p>
+
+<p>Click Products to see available items.</p>
+
+</div>
+
+<div id="products" class="page">
+
+<h1>Products</h1>
+
+<div class="card">
+
+<img src="https://via.placeholder.com/150">
+
+<h3>Shoes</h3>
+
+<p>Price : ₹1000</p>
+
+</div>
+
+<div class="card">
+
+<img src="https://via.placeholder.com/150">
+
+<h3>Watch</h3>
+
+<p>Price : ₹2000</p>
+
+</div>
+
+<div class="card">
+
+<img src="https://via.placeholder.com/150">
+
+<h3>Bag</h3>
+
+<p>Price : ₹500</p>
+
+</div>
+
+</div>
+
+<div id="about" class="page">
+
+<h1>About Us</h1>
+
+<p>This website is created using HTML, CSS and JavaScript.</p>
+
+<p>It demonstrates a simple E-Commerce Product Catalog.</p>
+
+</div>
+
+<script>
+
+function showPage(page){
+
+let pages=document.getElementsByClassName("page");
+
+for(let i=0;i<pages.length;i++){
+
+pages[i].style.display="none";
+
+}
+
+document.getElementById(page).style.display="block";
+
+}
+
+showPage("home");
+
+</script>
+
+</body>
+</html>
