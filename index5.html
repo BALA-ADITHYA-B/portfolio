@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Weather Dashboard</title>
+<style>
+body{
+font-family:Arial;
+text-align:center;
+margin-top:50px;
+}
+input{
+padding:5px;
+}
+button{
+padding:5px;
+}
+#result{
+margin-top:20px;
+}
+</style>
+</head>
+<body>
+
+<h1>Weather Dashboard</h1>
+
+<input type="text" id="city" placeholder="Enter city name">
+
+<button onclick="getWeather()">Search</button>
+
+<div id="result"></div>
+
+<script>
+
+async function getWeather(){
+
+let city=document.getElementById("city").value;
+
+let result=document.getElementById("result");
+
+if(city==""){
+result.innerHTML="Please enter city name";
+return;
+}
+
+let apiKey="YOUR_API_KEY";
+
+let url=`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+try{
+
+let response=await fetch(url);
+
+if(!response.ok){
+throw new Error("City not found");
+}
+
+let data=await response.json();
+
+let temperature=data.main.temp;
+
+let humidity=data.main.humidity;
+
+let wind=data.wind.speed;
+
+let country=data.sys.country;
+
+result.innerHTML=
+"<h2>"+city+", "+country+"</h2>"+
+"<p>Temperature : "+temperature+" °C</p>"+
+"<p>Humidity : "+humidity+" %</p>"+
+"<p>Wind Speed : "+wind+" m/s</p>";
+
+}
+
+catch(error){
+
+result.innerHTML=error.message;
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
